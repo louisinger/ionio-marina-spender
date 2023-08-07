@@ -1,13 +1,48 @@
 <script type="ts">
-  import type { ArtifactFunction } from '@ionio-lang/ionio';
+  import {
+    Argument,
+    ArtifactFunction,
+    PrimitiveType,
+    Signer,
+  } from '@ionio-lang/ionio';
   import { contractStore } from '../stores/contract.store';
   import type { IonioUtxo } from '../stores/covenants.store';
   import IonioFunctionInput from './common/IonioFunctionInput.svelte';
   import UtxoCovenantBox from './common/UtxoCovenantBox.svelte';
-  import { Pset } from 'liquidjs-lib';
+  import { marinaStore } from '../stores/marina.store';
 
   let selected = '';
   let ionioFunction: ArtifactFunction | undefined = undefined;
+  let functionParameters: (Argument | undefined)[] = [];
+
+  const onSelect = () => {
+    ionioFunction = covenant.scriptDetails.artifact.functions.find(
+      (fn) => fn.name === selected
+    );
+
+    functionParameters = Array(ionioFunction.functionInputs.length).fill(
+      undefined
+    );
+
+    const marinaSigner: Signer = {
+      signTransaction(psetBase64) {
+        return $marinaStore.provider.signTransaction(psetBase64);
+      },
+    };
+
+    for (const [index, param] of ionioFunction.functionInputs.entries()) {
+      if (param.type === PrimitiveType.Signature) {
+        functionParameters[index] = marinaSigner;
+      }
+    }
+  };
+
+  const onParameterChange = (paramIndex: number) => (value: Argument) => {
+    if (!ionioFunction) return;
+    const param = ionioFunction.functionInputs[paramIndex];
+    if (!param) return;
+    functionParameters[paramIndex] = value;
+  };
 
   $: hasContract = $contractStore.contract !== undefined;
   $: covenant = hasContract
@@ -16,24 +51,36 @@
   $: title = hasContract
     ? 'Select the covenant branch'
     : 'No contract selected';
+  $: contractName = hasContract
+    ? covenant.scriptDetails.artifact.contractName
+    : '';
+  $: numberOfBranches = hasContract
+    ? covenant.scriptDetails.artifact.functions.length
+    : 0;
+
+  $: textIntro = hasContract
+    ? `You've selected ${contractName} covenant, it has ${numberOfBranches} branch${
+        numberOfBranches > 1 ? 'es' : ''
+      }.`
+    : '';
+
+  $: textSelect = hasContract
+    ? 'Select the branch to use and fill parameters.'
+    : '';
 </script>
 
 <div>
   <h4 class="title has-text-centered">{title}</h4>
   {#if covenant}
+    <p class="is-size-6 is-italic">{textIntro}</p>
     <UtxoCovenantBox {covenant} />
   {/if}
 
-  <div class="is-flex is-align-content-center mb-3">
+  <p class="is-size-6 is-italic mt-3">{textSelect}</p>
+  <div class="is-flex is-align-content-center mt-1 mb-3">
     <div class="control has-icons-left">
       <div class="select is-large">
-        <select
-          bind:value={selected}
-          on:change={() =>
-            (ionioFunction = covenant.scriptDetails.artifact.functions.find(
-              (fn) => fn.name === selected
-            ))}
-        >
+        <select bind:value={selected} on:change={onSelect}>
           {#each covenant.scriptDetails.artifact.functions.map((fn) => fn.name) as branch}
             <option value={branch}>
               {branch}
@@ -64,11 +111,9 @@
     </h5>
 
     {#each ionioFunction.functionInputs as parameter, index}
-      <IonioFunctionInput {parameter} onChange={console.log} />
+      <IonioFunctionInput {parameter} onChange={onParameterChange(index)} />
     {/each}
 
-    <button class="button is-primary is-fullwidth mt-2">
-      CONFIRM
-    </button>
+    <button class="button is-primary is-fullwidth mt-2"> CONFIRM </button>
   {/if}
 </div>

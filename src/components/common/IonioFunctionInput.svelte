@@ -1,8 +1,9 @@
 <script type="ts">
-  import { Parameter, PrimitiveType } from '@ionio-lang/ionio';
+  import { Argument, Parameter, PrimitiveType } from '@ionio-lang/ionio';
+  import { script } from 'liquidjs-lib';
 
   export let parameter: Parameter;
-  export let onChange: (value: string) => void;
+  export let onChange: (value: Argument) => void;
 
   let value: string = '';
 
@@ -25,11 +26,38 @@
       case PrimitiveType.UInt64:
         return '64-bit unsigned integer';
       case PrimitiveType.Boolean:
-        return 'true or false';
+        return '"true" or "false"';
       case PrimitiveType.Signature:
         return "handled by marina signer, you don't need to fill this field";
       default:
         return '????';
+    }
+  }
+
+  function castString(s: string, type: PrimitiveType): Argument {
+    switch (type) {
+      case PrimitiveType.Asset:
+        return s;
+      case PrimitiveType.Bytes:
+        return s;
+      case PrimitiveType.Number:
+        return script.number.encode(parseInt(s));
+      case PrimitiveType.Value:
+        return s;
+      case PrimitiveType.DataSignature:
+        return s;
+      case PrimitiveType.PublicKey:
+        return s;
+      case PrimitiveType.XOnlyPublicKey:
+        return s;
+      case PrimitiveType.UInt64:
+        return parseInt(s);
+      case PrimitiveType.Boolean:
+        return s === 'true';
+      case PrimitiveType.Signature:
+        return s;
+      default:
+        return s;
     }
   }
 
@@ -49,8 +77,8 @@
           type="text"
           placeholder={getPlaceHolderFromPrimitiveType(parameter.type)}
           disabled={parameter.type === PrimitiveType.Signature}
-          {value}
-          on:input={() => onChange(value)}
+          bind:value={value}
+          on:input={() => onChange(castString(value, parameter.type))}
         />
       </p>
     </div>
