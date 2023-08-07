@@ -4,6 +4,7 @@
   import type { IonioUtxo } from '../stores/covenants.store';
   import IonioFunctionInput from './common/IonioFunctionInput.svelte';
   import UtxoCovenantBox from './common/UtxoCovenantBox.svelte';
+  import { Pset } from 'liquidjs-lib';
 
   let selected = '';
   let ionioFunction: ArtifactFunction | undefined = undefined;
@@ -65,5 +66,9 @@
     {#each ionioFunction.functionInputs as parameter, index}
       <IonioFunctionInput {parameter} onChange={console.log} />
     {/each}
+
+    <button class="button is-primary is-fullwidth mt-2">
+      CONFIRM
+    </button>
   {/if}
 </div>
