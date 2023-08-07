@@ -3,11 +3,10 @@ import {
   IonioScriptDetails,
   MarinaProvider,
   Utxo,
-  detectProvider,
   isIonioScriptDetails,
 } from 'marina-provider';
-import { marinaStore } from 'svelte-marina-button';
 import { derived } from 'svelte/store';
+import { marinaStore } from './marina.store';
 
 export type IonioUtxo = Utxo & {
   scriptDetails: IonioScriptDetails;
@@ -35,7 +34,7 @@ async function computeIonioUtxos(
 
 export const covenantStore = derived<typeof marinaStore, IonioUtxo[]>(marinaStore, ($marinaStore, set) => {
   set([]);
-  if ($marinaStore.installed && $marinaStore.enabled) {
-    detectProvider('marina', 5000).then(computeIonioUtxos).then(set);
-  } 
-});
+  if ($marinaStore.provider && $marinaStore.enabled) {
+    computeIonioUtxos($marinaStore.provider).then(set);
+  }
+}, []);

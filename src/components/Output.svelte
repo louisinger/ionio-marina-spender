@@ -16,7 +16,11 @@
 
 <div class="card">
   <header class="card-header">
-    <LiquidValue className="card-header-title" sats={output.value} ticker={'??'} />
+    <LiquidValue
+      className="card-header-title"
+      sats={output.value}
+      ticker={'??'}
+    />
     <button class="card-header-icon" aria-label="more options">
       <span class="icon">
         <i
@@ -32,18 +36,18 @@
   </header>
   <div class="card-content">
     <div class="content">
-        {#if isOpen}
-      <table>
-        <tbody>
-          {#each details as detail}
-            <tr>
+      {#if isOpen}
+        <table>
+          <tbody>
+            {#each details as detail}
+              <tr>
                 <td>{detail.name}</td>
                 <td>{detail.value}</td>
-            </tr>
-          {/each}
-        </tbody>
-      </table>
-        {/if}
+              </tr>
+            {/each}
+          </tbody>
+        </table>
+      {/if}
     </div>
   </div>
 </div>

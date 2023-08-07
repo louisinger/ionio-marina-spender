@@ -1,17 +1,43 @@
 <script type="ts">
-  import Connect, { marinaStore, MarinaStore } from 'svelte-marina-button';
   import Crafter from './components/Crafter.svelte';
+  import { initProvider, marinaStore } from './stores/marina.store';
 
-  marinaStore.subscribe((store: MarinaStore) => {
-    console.log('store', store);
+  let showCrafter = false;
+  let showConnect = false;
+
+  marinaStore.subscribe(({ enabled, provider }) => {
+    if (!provider || !enabled) initProvider().then((v) => marinaStore.set(v));
+
+    showCrafter = enabled && !!provider;
+    showConnect = !enabled && !!provider;
   });
 </script>
 
-<div class="container is-widescreen">
-  <Connect cssClass="button is-danger is-outlined is-rounded" />
-  <h1 class="title">Craft your custom PSET!</h1>
-  <Crafter />
-</div>
+<section class="section">
+  {#if showConnect}
+    <div class="notification is-warning">
+      <button
+        class="button"
+        on:click={() =>
+          $marinaStore.provider
+            .enable()
+            .then(() => initProvider().then((v) => marinaStore.set(v)))}
+        >Enable</button
+      >
+      <strong>Warning</strong> Marina is not enabled. Please connect your wallet.
+    </div>
+  {/if}
+
+  {#if showCrafter}
+    <Crafter />
+  {/if}
+
+  {#if !showCrafter && !showConnect}
+    <div class="notification is-warning">
+      <strong>Warning</strong> Marina is not installed.
+    </div>
+  {/if}
+</section>
 
 <style src="./scss/main.scss" lang="scss" global>
 </style>

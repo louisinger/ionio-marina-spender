@@ -1,36 +1,40 @@
 <script lang="ts">
   import { contractStore } from '../stores/contract.store';
-  import { covenantStore } from '../stores/covenants.store';
   import AddInputModal from './AddInputModal.svelte';
-  import CovenantsList from './CovenantsList.svelte';
-  import Input from './Input.svelte';
-  import Output from './Output.svelte';
+  import SelectCovenant from './SelectCovenant.svelte';
+  import SelectFunction from './SelectFunction.svelte';
 
   let addInputOpen = false;
 
   const buttons = [
-    { name: 'addInput', handler: () => { addInputOpen = true } },
+    {
+      name: 'addInput',
+      handler: () => {
+        addInputOpen = true;
+      },
+    },
     { name: 'addOutput', handler: () => {} },
     { name: 'addCovenant', handler: () => {} },
     { name: 'addBlinding', handler: () => {} },
-  ]
+  ];
+
+  $: shouldSelectCovenantUtxo = $contractStore.contract === undefined;
+  $: shouldSelectFunction =
+    !shouldSelectCovenantUtxo && $contractStore.tx === undefined;
 </script>
 
-<section>
+<div class="container">
   <AddInputModal open={addInputOpen} />
 
-  <div class="container">
-    <div class="box">
-      {#if $covenantStore.length > 0}
-        <h2 class="title">Select a covenant output to spend</h2>
-        <CovenantsList />
-      {:else}
-        <h2 class="title">No ionio utxos found in your wallet</h2>
-      {/if}
-    </div>
-  </div>
+  {#if shouldSelectCovenantUtxo}
+    <SelectCovenant />
+  {/if}
 
-  <div class="container">
+  {#if shouldSelectFunction}
+    <SelectFunction />
+  {/if}
+
+  <!-- <div class="container">
     <div class="columns">
         {#each buttons as button}
             <div class="column">
@@ -52,5 +56,5 @@
         <Output {output} />
       {/each}
     </div>
-  </div>
-</section>
+  </div> -->
+</div>

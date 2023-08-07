@@ -11,7 +11,12 @@
 
 <div class={classNames('dropdown', { 'is-active': isActive })}>
   <div class="dropdown-trigger">
-    <button on:click={() => isActive = !isActive} class="button" aria-haspopup="true" aria-controls="dropdown-menu">
+    <button
+      on:click={() => (isActive = !isActive)}
+      class="button"
+      aria-haspopup="true"
+      aria-controls="dropdown-menu"
+    >
       <span>Select utxo</span>
       <span class="icon is-small">
         <i class="fas fa-angle-down" aria-hidden="true" />
@@ -21,7 +26,13 @@
   <div class="dropdown-menu" id="dropdown-menu" role="menu">
     <div class="dropdown-content">
       {#each $utxosStore as utxo}
-        <div class="dropdown-item" on:click={() => { isActive = false; onSelect(utxo) }}>
+        <div
+          class="dropdown-item"
+          on:click={() => {
+            isActive = false;
+            onSelect(utxo);
+          }}
+        >
           <p>{utxo.txid}:{utxo.vout}</p>
           <LiquidValue
             sats={utxo.blindingData.value}
