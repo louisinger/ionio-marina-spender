@@ -1,5 +1,5 @@
 <script type="ts">
-  import Crafter from './components/Crafter.svelte';
+  import Main from './components/Main.svelte';
   import { initProvider, marinaStore } from './stores/marina.store';
 
   let showCrafter = false;
@@ -29,7 +29,7 @@
   {/if}
 
   {#if showCrafter}
-    <Crafter />
+    <Main />
   {/if}
 
   {#if !showCrafter && !showConnect}
