@@ -1706,7 +1706,7 @@ domain-browser@^4.19.0:
   resolved "https://registry.yarnpkg.com/domain-browser/-/domain-browser-4.22.0.tgz#6ddd34220ec281f9a65d3386d267ddd35c491f9f"
   integrity sha512-IGBwjF7tNk3cwypFNH/7bfzBcgSCbaMOD3GsaY1AU/JRrnHnYgEM0+9kQt52iZxjNsjBtJYtao146V+f8jFZNw==
 
-ecpair@^2.0.1, ecpair@^2.1.0:
+ecpair@^2.0.1:
   version "2.1.0"
   resolved "https://registry.yarnpkg.com/ecpair/-/ecpair-2.1.0.tgz#673f826b1d80d5eb091b8e2010c6b588e8d2cb45"
   integrity sha512-cL/mh3MtJutFOvFc27GPZE2pWL3a3k4YvzUWEOvilnfZVlH3Jwgx/7d6tlD7/75tNk8TG2m+7Kgtz0SI1tWcqw==
@@ -3035,7 +3035,7 @@ levn@^0.4.1:
     prelude-ls "^1.2.1"
     type-check "~0.4.0"
 
-liquidjs-lib@6.0.2-liquid.27:
+liquidjs-lib@6.0.2-liquid.27, liquidjs-lib@^6.0.2-liquid.27:
   version "6.0.2-liquid.27"
   resolved "https://registry.yarnpkg.com/liquidjs-lib/-/liquidjs-lib-6.0.2-liquid.27.tgz#aa496757c0c579676f192343beb8afb359143230"
   integrity sha512-cIrw6rhWU8g9mnyvCWuFrXtDSKapE0HAdGUAuFUfJrPAvI1OpZpYjJvVOaSeduvsfHC8ETZZB1h9FnUH5K2JKw==
@@ -3057,25 +3057,6 @@ liquidjs-lib@6.0.2-liquid.27:
     typeforce "^1.11.3"
     varuint-bitcoin "^1.1.2"
     wif "^2.0.1"
-
-liquidjs-lib@^6.0.2-liquid.27:
-  version "6.0.2-liquid.29"
-  resolved "https://registry.yarnpkg.com/liquidjs-lib/-/liquidjs-lib-6.0.2-liquid.29.tgz#911b70fe7e652ba1d40ce8a0902f16c41fb3f036"
-  integrity sha512-+aQyPpnsP4FgCwTFs8ROPW/prMVXV7MQCrfb5HKXqjFOg8ISdaVOG/ZYwtQvc5d9zn/yTIo4qWE9bXvVTO20Mg==
-  dependencies:
-    "@types/randombytes" "^2.0.0"
-    bech32 "^2.0.0"
-    bip174-liquid "^1.0.3"
-    bip66 "^1.1.0"
-    bitcoinjs-lib "^6.0.2"
-    bitset "^5.1.1"
-    blech32 "^1.0.1"
-    bs58check "^2.0.0"
-    create-hash "^1.2.0"
-    ecpair "^2.1.0"
-    slip77 "^0.2.0"
-    typeforce "^1.11.3"
-    varuint-bitcoin "^1.1.2"
 
 loader-runner@^4.2.0:
   version "4.3.0"

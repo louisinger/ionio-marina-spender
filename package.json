@@ -48,6 +48,9 @@
     "liquidjs-lib": "6.0.2-liquid.27",
     "marina-provider": "^3.0.0"
   },
+  "resolutions": {
+    "liquidjs-lib": "6.0.2-liquid.27"
+  },
   "prettier": {
     "tabWidth": 2,
     "semi": true,
