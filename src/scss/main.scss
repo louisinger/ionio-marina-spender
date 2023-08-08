@@ -16,8 +16,15 @@ $control-border-width: 2px;
 @import 'node_modules/bulma/bulma';
 
 .primary-hover {
+    cursor: pointer;
     transition: box-shadow 0.3s ease-in-out;
     &:hover {
         box-shadow: 1px 1px 1px $primary;
+    }
+}
+
+.custom-modal {
+    .modal-card {
+        height: 80vh;
     }
 }

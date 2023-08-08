@@ -1,11 +1,12 @@
 <script type="ts">
   import type { Utxo } from 'marina-provider';
   import { addInput, contractStore } from '../stores/contract.store';
+  import { assetsStore } from '../stores/assets.store';
   import BaseModal from './common/BaseModal.svelte';
   import DropdownUtxos from './DropdownUtxos.svelte';
   import LiquidValue from './common/LiquidValue.svelte';
 
-  export let open: boolean;
+  export let onClose: () => void;
 
   let selected: Utxo = undefined;
 
@@ -16,21 +17,20 @@
 </script>
 
 <BaseModal
-  title="add input to contract"
+  title="add a single input to PSET"
   {onSave}
   onSaveDisabled={!selected}
-  isActive={open}
+  {onClose}
 >
   <div class="container">
-    <h4>Select the utxo to add</h4>
     <DropdownUtxos onSelect={(utxo) => (selected = utxo)} />
     {#if selected}
-      <p class="is-success">Utxo selected!</p>
-      <div class="box">
-        <p>{selected.txid}:{selected.vout}</p>
+      <div class="box is-flex is-align-content-center is-flex-direction-column">
+        <p class="is-size-7">{selected.txid}:{selected.vout}</p>
         <LiquidValue
           sats={selected.blindingData.value}
-          ticker={selected.blindingData.asset.slice(0, 5)}
+          ticker={$assetsStore.get(selected.blindingData.asset)?.ticker}
+          precision={$assetsStore.get(selected.blindingData.asset)?.precision}
         />
       </div>
     {/if}

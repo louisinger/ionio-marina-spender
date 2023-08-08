@@ -4,9 +4,9 @@
     export let precision = 8;
     export let ticker: string;
 
-    $: value = sats * 10 ** -precision;
+    $: value = sats * (10 ** -precision);
 </script>
 
 <p class={className}>
-    <span class="has-text-weight-semibold has-text-primary">{value.toLocaleString()}</span> {ticker}
+    <span class="has-text-weight-semibold has-text-primary">{value.toFixed(precision)}</span> {ticker}
 </p>

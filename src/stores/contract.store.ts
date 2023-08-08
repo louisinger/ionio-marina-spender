@@ -1,17 +1,18 @@
 import type { Argument, Contract, Transaction } from '@ionio-lang/ionio';
 import { Updater, writable } from 'svelte/store';
 import type { IonioUtxo } from './covenants.store';
-import { AssetHash, address, confidential } from 'liquidjs-lib';
+import { AssetHash, Extractor, Finalizer, address, confidential } from 'liquidjs-lib';
 import type { Utxo } from 'marina-provider';
 import type { Output } from '../application/output';
 
 type ContractState = {
-      tx?: Transaction;
-      contract?: Contract;
-      inputs: Utxo[];
-      outputs: Output[];
-    }
-  ;
+  tx?: Transaction;
+  functionApplied?: string;
+  contract?: Contract;
+  signedTxHex?: string;
+  inputs: Utxo[];
+  outputs: Output[];
+};
 
 export const contractStore = writable<ContractState>({
   tx: undefined,
@@ -77,14 +78,13 @@ export function apply(
 
     return {
       ...state,
+      functionApplied: functionName,
       tx,
     };
   };
 }
 
-export function addInput(
-  utxo: Utxo,
-): Updater<ContractState> {
+export function addInput(utxo: Utxo): Updater<ContractState> {
   return (state) => {
     if (!state || !state.tx) return state;
 
@@ -101,10 +101,23 @@ export function addInput(
   };
 }
 
+export function deleteInput(index: number): Updater<ContractState> {
+  return (state) => {
+    if (!state || !state.tx) return state;
+    if (index === 0) return state;
+    const newState = { ...state };
+    newState.tx.pset.inputs.splice(index, 1);
+    newState.tx.pset.globals.inputCount -= 1;
+    newState.tx.unblindedInputs.splice(index, 1);
+    newState.inputs.splice(index, 1);
+    return newState;
+  };
+}
+
 export function addRecipientOutput(
   addr: string,
   amount: number,
-  asset: string,
+  asset: string
 ): Updater<ContractState> {
   return (state) => {
     if (!state || !state.tx) return state;
@@ -127,14 +140,14 @@ export function addRecipientOutput(
           amount,
           value: amount,
         },
-      ]
+      ],
     };
   };
 }
 
 export function addBurnOutput(
   amount: number,
-  asset: string,
+  asset: string
 ): Updater<ContractState> {
   return (state) => {
     if (!state || !state.tx) return state;
@@ -150,12 +163,23 @@ export function addBurnOutput(
           amount,
           value: amount,
         },
-      ]
+      ],
     };
   };
 }
 
-export function addFee(amount: number): Updater<ContractState> {
+export function deleteOutput(index: number): Updater<ContractState> {
+  return (state) => {
+    if (!state || !state.tx) return state;
+    const newState = { ...state };
+    newState.tx.pset.outputs.splice(index, 1);
+    newState.tx.pset.globals.outputCount -= 1;
+    newState.outputs.splice(index, 1);
+    return newState;
+  };
+}
+
+export function addFee(amount: number, asset: string): Updater<ContractState> {
   return (state) => {
     if (!state || !state.tx) return state;
 
@@ -166,10 +190,34 @@ export function addFee(amount: number): Updater<ContractState> {
         ...state.outputs,
         {
           recipient: Buffer.alloc(0),
-          asset: 'L-BTC',
+          asset,
           value: amount,
         },
-      ]
+      ],
+    };
+  };
+}
+
+export async function unlock(
+  tx: ContractState['tx']
+): Promise<Updater<ContractState>> {
+  const unlocked = await tx.unlock();
+
+  return (state) => {
+    if (!state) return state;
+
+    const finalizer = new Finalizer(unlocked.pset);
+    for (let index = 1; index < unlocked.pset.globals.inputCount; index++) {
+      finalizer.finalizeInput(index);
+    }
+
+    // extract and broadcast transaction
+    const rawHex = Extractor.extract(finalizer.pset).toHex();
+
+    return {
+      ...state,
+      tx: unlocked,
+      signedTxHex: rawHex,
     };
   };
 }

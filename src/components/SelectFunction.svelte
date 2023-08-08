@@ -5,7 +5,7 @@
     PrimitiveType,
     Signer,
   } from '@ionio-lang/ionio';
-  import { contractStore } from '../stores/contract.store';
+  import { apply, contractStore } from '../stores/contract.store';
   import type { IonioUtxo } from '../stores/covenants.store';
   import IonioFunctionInput from './common/IonioFunctionInput.svelte';
   import UtxoCovenantBox from './common/UtxoCovenantBox.svelte';
@@ -44,6 +44,11 @@
     functionParameters[paramIndex] = value;
   };
 
+  const onConfirm = () => {
+    if (!selected) return;
+    contractStore.update(apply(selected, ...functionParameters));
+  };
+
   $: hasContract = $contractStore.contract !== undefined;
   $: covenant = hasContract
     ? ($contractStore.inputs[0] as IonioUtxo)
@@ -60,13 +65,17 @@
 
   $: textIntro = hasContract
     ? `You've selected ${contractName} covenant, it has ${numberOfBranches} branch${
-        numberOfBranches > 1 ? 'es' : ''
-      }.`
+      numberOfBranches > 1 ? 'es' : ''
+    }.`
     : '';
 
   $: textSelect = hasContract
     ? 'Select the branch to use and fill parameters.'
     : '';
+
+  $: submitButtonDisabled = functionParameters.some(
+    (param) => param === undefined
+  );
 </script>
 
 <div>
@@ -114,6 +123,12 @@
       <IonioFunctionInput {parameter} onChange={onParameterChange(index)} />
     {/each}
 
-    <button class="button is-primary is-fullwidth mt-2"> CONFIRM </button>
+    <button
+      class="button is-primary is-fullwidth mt-2"
+      disabled={submitButtonDisabled}
+      on:click={onConfirm}
+    >
+      CONFIRM
+    </button>
   {/if}
 </div>

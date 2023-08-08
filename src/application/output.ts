@@ -16,3 +16,11 @@ export function scriptHex(output: Output): string {
 
   return output.recipient.toString('hex');
 }
+
+export function scriptBuffer(output: Output) {
+  if (typeof output.recipient === 'string') {
+    return address.toOutputScript(output.recipient);
+  }
+
+  return output.recipient;
+}
