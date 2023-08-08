@@ -1,7 +1,8 @@
-# svelte-webpack-bulma
+# Ionio Marina spender
 
-Template for Svelte with TypeScript, Webpack and Bulma CSS library. 
+Spend your Ionio utxos hold by Marina wallet.
 
+Try it! https://louisinger.github.io/ionio-marina-spender/
 
 ## What's inside?
 
@@ -10,20 +11,3 @@ Template for Svelte with TypeScript, Webpack and Bulma CSS library.
 - Bulma
 - Prettier
 - ESLint
-
-
-### Using `degit`
-
-To create a new project locally, run
-
-```bash
-npx degit "tiero/svelte-webpack-bulma" my-app
-```
-
-[`degit`](https://github.com/Rich-Harris/degit) is a scaffolding tool that lets you create a directory from a branch in a repository.
-
-Replace `my-app` with the path where you wish to create the project.
-
-### Using GitHub templates
-
-Alternatively, you can create the new project as a GitHub repository using GitHub's template feature.
