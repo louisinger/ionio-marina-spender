@@ -8,7 +8,7 @@ export type MarinaState = {
 };
 
 export const initProvider = async (): Promise<MarinaState> => {
-  const provider = await detectProvider('marina', 10_000);
+  const provider = await detectProvider('marina');
 
   if (provider) {
     const enabled = await provider.isEnabled();
@@ -21,12 +21,10 @@ export const initProvider = async (): Promise<MarinaState> => {
     };
   }
 
-  const network = await provider.getNetwork();
-
   return {
     enabled: false,
     provider: window['marina'],
-    network,
+    network: 'liquid',
   };
 };
 

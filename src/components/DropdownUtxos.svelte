@@ -33,6 +33,9 @@
       {#each $utxosStore as utxo, index}
         <div class="primary-hover">
           <div
+            on:keydown={() => {
+              if (onSelect !== undefined) onSelect(utxo);
+            }}
             class="dropdown-item"
             on:click={() => {
               isActive = false;

@@ -1,6 +1,6 @@
 <script lang="ts">
   import classNames from 'classnames';
-import { assetsStore } from '../../stores/assets.store';
+  import { assetsStore } from '../../stores/assets.store';
   import type { IonioUtxo } from '../../stores/covenants.store';
 
   export let covenant: IonioUtxo;
@@ -20,7 +20,13 @@ import { assetsStore } from '../../stores/assets.store';
   };
 </script>
 
-<div on:click={onClick} class={classNames("box mt-2", { 'primary-hover': onClick !== undefined })}>
+<div
+  on:click={onClick}
+  on:keydown={() => {
+    if (onClick !== undefined) onClick();
+  }}
+  class={classNames('box mt-2', { 'primary-hover': onClick !== undefined })}
+>
   <p class="has-text-weight-semibold has-text-primary">
     {covenant.txid}:{covenant.vout}
   </p>

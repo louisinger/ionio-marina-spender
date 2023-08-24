@@ -69,7 +69,13 @@
 </script>
 
 <div class="card m-1">
-  <header class="card-header primary-hover" on:click={() => (isOpen = !isOpen)}>
+  <header 
+    class="card-header primary-hover" 
+    on:keydown={() => {
+      isOpen = !isOpen;
+    }}
+    on:click={() => (isOpen = !isOpen)
+  }>
     <div class="card-header-icon">
       <span class="icon">
         #{index}

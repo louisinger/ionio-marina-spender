@@ -1,42 +1,46 @@
 <script type="ts">
+  import { onMount } from 'svelte';
   import Main from './components/Main.svelte';
   import { initProvider, marinaStore } from './stores/marina.store';
 
-  let showCrafter = false;
-  let showConnect = false;
-
-  marinaStore.subscribe(({ enabled, provider }) => {
-    if (!provider || !enabled) initProvider().then((v) => marinaStore.set(v));
-
-    showCrafter = enabled && !!provider;
-    showConnect = !enabled && !!provider;
+  marinaStore.subscribe((v) => {
+    console.log(v);
   });
+
+  const init = async () => {
+    console.log('init')
+    const v = await initProvider();
+    marinaStore.set(v);
+    if ($marinaStore.provider) {
+      if ($marinaStore.enabled) return true;
+      await $marinaStore.provider.enable();
+      const v = await initProvider();
+      marinaStore.set(v);
+      return $marinaStore.provider.isEnabled()
+    }
+    return false;
+  };
+
 </script>
 
 <section class="section">
-  {#if showConnect}
-    <div class="notification is-warning">
-      <button
-        class="button"
-        on:click={() =>
-          $marinaStore.provider
-            .enable()
-            .then(() => initProvider().then((v) => marinaStore.set(v)))}
-        >Enable</button
-      >
-      <strong>Warning</strong> Marina is not enabled. Please connect your wallet.
+  {#await init()}
+    <div class="notification is-info">
+      <span class="icon"><i class="fas fa-info-circle"></i></span>
+      <strong>Marina</strong> is initializing...
     </div>
-  {/if}
-
-  {#if showCrafter}
-    <Main />
-  {/if}
-
-  {#if !showCrafter && !showConnect}
-    <div class="notification is-warning">
-      <strong>Warning</strong> Marina is not installed.
+  {:then isEnabled}
+    {#if isEnabled}
+      <Main />
+    {/if}
+  {:catch error}
+    <div class="notification is-danger">
+      <span class="icon"><i class="fas fa-exclamation-triangle"></i></span>
+      <strong>Marina</strong> failed to initialize.
+      <br />
+      <code>{error.message}</code>
     </div>
-  {/if}
+  {/await}
 </section>
 
 <style src="./scss/main.scss" lang="scss" global>
