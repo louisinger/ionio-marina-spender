@@ -1,13 +1,13 @@
 <script>
   import classNames from 'classnames';
-  import { contractStore, unlock } from '../stores/contract.store';
+  import { contractStore, unlock } from '../../stores/contract.store';
   import AddInputModal from './AddInputModal.svelte';
   import Input from './Input.svelte';
   import Output from './Output.svelte';
   import RequirementsNotifications from './RequirementsNotifications.svelte';
   import AddOutputModal from './AddOutputModal.svelte';
   import CoinSelectionModal from './CoinSelectionModal.svelte';
-  import { marinaStore } from '../stores/marina.store';
+  import { marinaStore } from '../../stores/marina.store';
 
   let addInputModalOpen = false;
   let addOutputModalOpen = false;

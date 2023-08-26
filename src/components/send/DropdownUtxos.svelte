@@ -1,9 +1,9 @@
 <script lang="ts">
   import classNames from 'classnames';
   import type { Utxo } from 'marina-provider';
-  import { utxosStore } from '../stores/utxos.store';
-  import { assetsStore } from '../stores/assets.store';
-  import LiquidValue from './common/LiquidValue.svelte';
+  import { utxosStore } from '../../stores/utxos.store';
+  import { assetsStore } from '../../stores/assets.store';
+  import LiquidValue from '../common/LiquidValue.svelte';
 
   export let onSelect: (utxo: Utxo) => void;
 

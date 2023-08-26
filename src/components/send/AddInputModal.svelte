@@ -1,10 +1,10 @@
 <script type="ts">
   import type { Utxo } from 'marina-provider';
-  import { addInput, contractStore } from '../stores/contract.store';
-  import { assetsStore } from '../stores/assets.store';
-  import BaseModal from './common/BaseModal.svelte';
+  import { addInput, contractStore } from '../../stores/contract.store';
+  import { assetsStore } from '../../stores/assets.store';
+  import BaseModal from '../common/BaseModal.svelte';
   import DropdownUtxos from './DropdownUtxos.svelte';
-  import LiquidValue from './common/LiquidValue.svelte';
+  import LiquidValue from '../common/LiquidValue.svelte';
 
   export let onClose: () => void;
 

@@ -1,11 +1,11 @@
 <script lang="ts">
   import secp256k1 from '@vulpemventures/secp256k1-zkp';
-  import { IonioUtxo, covenantStore } from '../stores/covenants.store';
-  import { contractStore, init } from '../stores/contract.store';
+  import { IonioUtxo, covenantStore } from '../../stores/covenants.store';
+  import { contractStore, init } from '../../stores/contract.store';
   import { Contract } from '@ionio-lang/ionio';
   import { networks } from 'liquidjs-lib';
-  import { marinaStore } from '../stores/marina.store';
-  import UtxoCovenantBox from './common/UtxoCovenantBox.svelte';
+  import { marinaStore } from '../../stores/marina.store';
+  import UtxoCovenantBox from '../common/UtxoCovenantBox.svelte';
 
   const select = async (covenant: IonioUtxo) => {
     if (!$marinaStore.provider)

@@ -4,9 +4,9 @@
     addFee,
     addRecipientOutput,
     contractStore,
-  } from '../stores/contract.store';
-  import BaseModal from './common/BaseModal.svelte';
-  import OutputForm from './common/OutputForm.svelte';
+  } from '../../stores/contract.store';
+  import BaseModal from '../common/BaseModal.svelte';
+  import OutputForm from '../common/OutputForm.svelte';
 
   export let onClose: () => void;
 

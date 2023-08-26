@@ -1,5 +1,5 @@
 <script type="ts">
-  import { covenantStore } from '../stores/covenants.store';
+  import { covenantStore } from '../../stores/covenants.store';
   import CovenantsList from './CovenantsList.svelte';
 
   $: title =

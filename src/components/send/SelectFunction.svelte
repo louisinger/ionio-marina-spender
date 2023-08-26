@@ -5,11 +5,11 @@
     PrimitiveType,
     Signer,
   } from '@ionio-lang/ionio';
-  import { apply, contractStore } from '../stores/contract.store';
-  import type { IonioUtxo } from '../stores/covenants.store';
-  import IonioFunctionInput from './common/IonioFunctionInput.svelte';
-  import UtxoCovenantBox from './common/UtxoCovenantBox.svelte';
-  import { marinaStore } from '../stores/marina.store';
+  import { apply, contractStore } from '../../stores/contract.store';
+  import type { IonioUtxo } from '../../stores/covenants.store';
+  import IonioFunctionInput from '../common/IonioFunctionInput.svelte';
+  import UtxoCovenantBox from '../common/UtxoCovenantBox.svelte';
+  import { marinaStore } from '../../stores/marina.store';
 
   let selected = '';
   let ionioFunction: ArtifactFunction | undefined = undefined;

@@ -6,11 +6,11 @@
     isIonioScriptDetails,
     Utxo,
   } from 'marina-provider';
-  import { isConfidential } from '../application/guard';
-  import LiquidValue from './common/LiquidValue.svelte';
-  import { assetsStore } from '../stores/assets.store';
-  import { marinaStore } from '../stores/marina.store';
-  import { contractStore, deleteInput } from '../stores/contract.store';
+  import { isConfidential } from '../../application/guard';
+  import LiquidValue from '../common/LiquidValue.svelte';
+  import { assetsStore } from '../../stores/assets.store';
+  import { marinaStore } from '../../stores/marina.store';
+  import { contractStore, deleteInput } from '../../stores/contract.store';
 
   export let utxo: Utxo;
   export let index: number;

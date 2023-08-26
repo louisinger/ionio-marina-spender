@@ -1,7 +1,7 @@
 <script lang="ts">
   import { isIonioScriptDetails } from 'marina-provider';
-  import { contractStore } from '../stores/contract.store';
-  import IonioRequireNotification from './common/IonioRequireNotification.svelte';
+  import { contractStore } from '../../stores/contract.store';
+  import IonioRequireNotification from '../common/IonioRequireNotification.svelte';
 
   let notifications = [];
 

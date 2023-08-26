@@ -1,15 +1,15 @@
 <script type="ts">
-  import { selectCoins } from '../application/selection';
+  import { selectCoins } from '../../application/selection';
   import {
     addInput,
     addRecipientOutput,
     contractStore,
-  } from '../stores/contract.store';
-  import { assetsStore } from '../stores/assets.store';
-  import BaseModal from './common/BaseModal.svelte';
-  import LiquidValue from './common/LiquidValue.svelte';
-  import { utxosStore } from '../stores/utxos.store';
-  import { marinaStore } from '../stores/marina.store';
+  } from '../../stores/contract.store';
+  import { assetsStore } from '../../stores/assets.store';
+  import BaseModal from '../common/BaseModal.svelte';
+  import LiquidValue from '../common/LiquidValue.svelte';
+  import { utxosStore } from '../../stores/utxos.store';
+  import { marinaStore } from '../../stores/marina.store';
   import { AssetHash } from 'liquidjs-lib';
 
   export let onClose: () => void;

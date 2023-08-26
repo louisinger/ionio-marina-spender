@@ -1,10 +1,10 @@
 <script type="ts">
   import classNames from 'classnames';
-  import { assetsStore } from '../stores/assets.store';
-  import { scriptHex, Output, scriptBuffer } from '../application/output';
-  import LiquidValue from './common/LiquidValue.svelte';
+  import { assetsStore } from '../../stores/assets.store';
+  import { scriptHex, Output, scriptBuffer } from '../../application/output';
+  import LiquidValue from '../common/LiquidValue.svelte';
   import { script } from 'liquidjs-lib';
-  import { contractStore, deleteOutput } from '../stores/contract.store';
+  import { contractStore, deleteOutput } from '../../stores/contract.store';
 
   export let output: Output;
   export let index: number;
