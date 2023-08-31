@@ -42,7 +42,6 @@
   },
   "dependencies": {
     "@ionio-lang/ionio": "^0.5.0",
-    "@svelte-plugins/tooltips": "^0.1.6",
     "@vulpemventures/secp256k1-zkp": "^3.1.0",
     "bulma": "^0.9.4",
     "classnames": "^2.3.2",

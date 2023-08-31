@@ -1,7 +1,5 @@
 <script lang="ts">
   import type { ArtifactFunction } from '@ionio-lang/ionio';
-  import { infos } from '../../application/infos';
-  import InfoTooltipIcon from './InfoTooltipIcon.svelte';
   import classNames from 'classnames';
 
   export let fn: ArtifactFunction;
@@ -40,7 +38,7 @@
       <div class="columns">
         <div class="column is-narrow">
           <p class="subtitle is-size-6">
-            Input stack <InfoTooltipIcon content={infos.INPUT_STACK} />
+            Input stack
           </p>
           <div class="table-container">
             <table class="table is-striped">
@@ -64,7 +62,7 @@
 
         <div class="column">
           <p class="subtitle is-size-6">
-            Requirements <InfoTooltipIcon content={infos.REQUIREMENTS} />
+            Requirements
           </p>
           <div class="table-container">
             <table class="table is-striped">
@@ -95,7 +93,7 @@
       </div>
 
       <p class="subtitle is-size-6">
-        Script <InfoTooltipIcon content={infos.SCRIPT} />
+        Script
       </p>
       <blockquote class="is-family-code is-size-7">
         {fn.asm.join(' ')}

@@ -1,8 +1,6 @@
 <script lang="ts">
   import type { Artifact } from '@ionio-lang/ionio';
   import ArtifactFunction from './ArtifactFunction.svelte';
-  import InfoTooltipIcon from './InfoTooltipIcon.svelte';
-  import { infos } from '../../application/infos';
 
   export let artifact: Artifact;
 </script>
@@ -12,9 +10,7 @@
   <div class="columns mt-4">
     <div class="column is-narrow">
       <p class="subtitle is-size-6">
-        Constructor inputs <InfoTooltipIcon
-          content={infos.CONSTRUCTOR_INPUTS}
-        />
+        Constructor inputs
       </p>
       <div class="table-container">
         <table class="table is-striped">
@@ -38,7 +34,7 @@
 
     <div class="column">
       <p class="subtitle is-size-6">
-        Covenant branches <InfoTooltipIcon content={infos.COVENANT_BRANCHES} />
+        Covenant branches
       </p>
       {#each artifact.functions as fn}
         <ArtifactFunction {fn} />
