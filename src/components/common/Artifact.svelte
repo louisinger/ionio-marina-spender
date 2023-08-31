@@ -1,35 +1,48 @@
 <script lang="ts">
   import type { Artifact } from '@ionio-lang/ionio';
   import ArtifactFunction from './ArtifactFunction.svelte';
+  import InfoTooltipIcon from './InfoTooltipIcon.svelte';
+  import { infos } from '../../application/infos';
 
   export let artifact: Artifact;
 </script>
 
 <div>
-  <p class="title is-size-5">{artifact.contractName}</p>
+  <p class="title is-size-4">{artifact.contractName}</p>
+  <div class="columns mt-4">
+    <div class="column is-narrow">
+      <p class="subtitle is-size-6">
+        Constructor inputs <InfoTooltipIcon
+          content={infos.CONSTRUCTOR_INPUTS}
+        />
+      </p>
+      <div class="table-container">
+        <table class="table is-striped">
+          <thead>
+            <tr>
+              <th class="is-size-7">Name</th>
+              <th class="is-size-7">Type</th>
+            </tr>
+          </thead>
+          <tbody>
+            {#each artifact.constructorInputs as input}
+              <tr>
+                <td class="is-size-7">{input.name}</td>
+                <td class="is-size-7">{input.type}</td>
+              </tr>
+            {/each}
+          </tbody>
+        </table>
+      </div>
+    </div>
 
-  <p class="subtitle is-size-7">Constructor inputs</p>
-  <div class="table-container">
-    <table class="table is-striped">
-      <thead>
-        <tr>
-          <th class="is-size-7">Name</th>
-          <th class="is-size-7">Type</th>
-        </tr>
-      </thead>
-      <tbody>
-        {#each artifact.constructorInputs as input}
-          <tr>
-            <td class="is-size-7">{input.name}</td>
-            <td class="is-size-7">{input.type}</td>
-          </tr>
-        {/each}
-      </tbody>
-    </table>
+    <div class="column">
+      <p class="subtitle is-size-6">
+        Covenant branches <InfoTooltipIcon content={infos.COVENANT_BRANCHES} />
+      </p>
+      {#each artifact.functions as fn}
+        <ArtifactFunction {fn} />
+      {/each}
+    </div>
   </div>
-  
-  <p class="subtitle is-size-7">Constructor inputs</p>
-  {#each artifact.functions as fn}
-    <ArtifactFunction fn={fn} />
-  {/each}
 </div>

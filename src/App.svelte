@@ -1,17 +1,12 @@
 <script type="ts">
   import Main from './components/Main.svelte';
-  import { marinaStore } from './stores/marina.store';
   import Navbar from './components/Navbar.svelte';
-
-  let isEnabled = false;
-
-  marinaStore.subscribe((v) => {
-    isEnabled = v.enabled;
-  });
+  import Footer from './components/Footer.svelte';
 </script>
+
+<div class="hero is-fullheight">
 
 <Navbar />
 <Main />
-
-<style src="./scss/main.scss" lang="scss" global>
-</style>
+<Footer />
+</div>

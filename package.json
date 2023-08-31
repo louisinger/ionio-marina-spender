@@ -2,6 +2,7 @@
   "name": "ionio-marina-spender",
   "version": "1.0.0",
   "devDependencies": {
+    "@svelte-plugins/tooltips": "^0.1.6",
     "@tsconfig/svelte": "^1.0.10",
     "@types/node": "^14.11.1",
     "@typescript-eslint/eslint-plugin": "^5.28.0",

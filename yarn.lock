@@ -147,6 +147,11 @@
     "@nodelib/fs.scandir" "2.1.5"
     fastq "^1.6.0"
 
+"@svelte-plugins/tooltips@^0.1.6":
+  version "0.1.6"
+  resolved "https://registry.yarnpkg.com/@svelte-plugins/tooltips/-/tooltips-0.1.6.tgz#e286302d473c17e92d1a79756285390f9583b232"
+  integrity sha512-UiQfOyU0mssIf8ABhXU8Er55hiHZeY7Axu8KTIiGR73dC/pwdK54GdtXavZN2cJPN/n09Uh/Fg2PfWfRxJ+hWw==
+
 "@tsconfig/svelte@^1.0.10":
   version "1.0.13"
   resolved "https://registry.yarnpkg.com/@tsconfig/svelte/-/svelte-1.0.13.tgz#2fa34376627192c0d643ce54964915e2bd3a58e4"
