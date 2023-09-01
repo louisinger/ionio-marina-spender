@@ -10,8 +10,8 @@
         </span>
         ionio-marina-spender
       </a>
-      by <a href="https://jgthms.com">Louis Singer</a>. The source code is
-      licensed
+      by <a href="https://github.com/louisinger">Louis Singer</a>. The source
+      code is licensed
       <a href="http://opensource.org/licenses/mit-license.php">MIT</a>.
     </p>
     <p>
